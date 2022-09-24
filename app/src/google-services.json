@@ -1,100 +1,33 @@
 {
   "project_info": {
-    "project_number": "78575273076",
-    "firebase_url": "https://fir-app-fe831.firebaseio.com",
-    "project_id": "fir-app-fe831",
-    "storage_bucket": "fir-app-fe831.appspot.com"
+    "project_number": "368171735465",
+    "project_id": "avaliacaolimpeza-843e2",
+    "storage_bucket": "avaliacaolimpeza-843e2.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:78575273076:android:f61fe10876ac9bcce9fd21",
-        "android_client_info": {
-          "package_name": "com.br.juarezjunior.firebaseapp"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "78575273076-hjpt55o5bustp39kkklij6pac3j23h4b.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.br.juarezjunior.firebaseapp",
-            "certificate_hash": "1a5cbcaa55d699ce23a02f4528ecbc01c833e71b"
-          }
-        },
-        {
-          "client_id": "78575273076-cj3ji2ljrn5l2dq4tpe5mjbe3qqv6rnj.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyC7B6ciRY8mkqFm54YtyvT5SQ2e3etXNpQ"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "78575273076-cj3ji2ljrn5l2dq4tpe5mjbe3qqv6rnj.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:78575273076:android:926c46e2532651cfe9fd21",
-        "android_client_info": {
-          "package_name": "com.infnet.aluno.juarez"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "78575273076-cj3ji2ljrn5l2dq4tpe5mjbe3qqv6rnj.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyC7B6ciRY8mkqFm54YtyvT5SQ2e3etXNpQ"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "78575273076-cj3ji2ljrn5l2dq4tpe5mjbe3qqv6rnj.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:78575273076:android:6abffbfbf7863584e9fd21",
+        "mobilesdk_app_id": "1:368171735465:android:8eaf33f6a580953efd8cb8",
         "android_client_info": {
           "package_name": "com.infnet.juarez.avaliacaolimpeza"
         }
       },
       "oauth_client": [
         {
-          "client_id": "78575273076-cj3ji2ljrn5l2dq4tpe5mjbe3qqv6rnj.apps.googleusercontent.com",
+          "client_id": "368171735465-uep0rebch9u8gl56ku71bfsoetu0u7hb.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC7B6ciRY8mkqFm54YtyvT5SQ2e3etXNpQ"
+          "current_key": "AIzaSyCCefx3KRlIvNegnk6WEvzsL_AsCckXUcA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "78575273076-cj3ji2ljrn5l2dq4tpe5mjbe3qqv6rnj.apps.googleusercontent.com",
+              "client_id": "368171735465-uep0rebch9u8gl56ku71bfsoetu0u7hb.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

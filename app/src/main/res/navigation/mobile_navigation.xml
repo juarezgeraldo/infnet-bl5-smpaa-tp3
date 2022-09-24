@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_cadastro_pesquisa">
+
+    <fragment
+        android:id="@+id/nav_cadastro_pesquisa"
+        android:name="com.infnet.juarez.avaliacaolimpeza.ui.cadastra_pesquisa.CadastraPesquisaFragment"
+        android:label="@string/menu_cadastro_pesquisa"
+        tools:layout="@layout/fragment_cadastra_pesquisa" />
+
+    <fragment
+        android:id="@+id/nav_gallery"
+        android:name="com.infnet.juarez.avaliacaolimpeza.ui.gallery.GalleryFragment"
+        android:label="@string/menu_gallery"
+        tools:layout="@layout/fragment_gallery" />
+
+    <fragment
+        android:id="@+id/nav_slideshow"
+        android:name="com.infnet.juarez.avaliacaolimpeza.ui.slideshow.SlideshowFragment"
+        android:label="@string/menu_slideshow"
+        tools:layout="@layout/fragment_slideshow" />
+
+    <fragment
+        android:id="@+id/nav_cadastro_pergunta"
+        android:name="com.infnet.juarez.avaliacaolimpeza.ui.pergunta.PerguntaFragment"
+        android:label="@string/menu_cadastro_pergunta"
+        tools:layout="@layout/fragment_pergunta" />
+</navigation>

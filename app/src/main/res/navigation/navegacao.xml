@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navegacao"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.infnet.juarez.avaliacaolimpeza.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_menu"
+            app:destination="@id/menu" />
+    </fragment>
+    <activity
+        android:id="@+id/menu"
+        android:name="com.infnet.juarez.avaliacaolimpeza.Menu"
+        android:label="app_bar_menu"
+        tools:layout="@layout/app_bar_menu" />
+    <action
+        android:id="@+id/action_menu_to_loginFragment"
+        app:destination="@id/loginFragment" />
+</navigation>

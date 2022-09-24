@@ -1,33 +1,21 @@
 package com.infnet.juarez.avaliacaolimpeza
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.firebase.ui.auth.AuthUI
-import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
-import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupActionBarWithNavController
 
-class MainActivity : AppCompatActivity() {
-    private val signInLauncher = registerForActivityResult(
-        FirebaseAuthUIActivityResultContract()
-    ) { res ->
-        this.onSignInResult(res)
-    }
-    private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult){
-        if (result.resultCode == RESULT_OK){
-
-        }
-    }
+class MainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val providers = arrayListOf(
-            AuthUI.IdpConfig.EmailBuilder().build())
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
 
-        val signInIntent = AuthUI.getInstance()
-            .createSignInIntentBuilder()
-            .setAvailableProviders(providers)
-            .build()
-        signInLauncher.launch(signInIntent)
+        // Set up the action bar for use with the NavController
+        setupActionBarWithNavController(navController)
+
     }
 }
