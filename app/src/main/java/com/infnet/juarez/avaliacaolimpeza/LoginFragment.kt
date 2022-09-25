@@ -10,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
@@ -32,6 +33,8 @@ class LoginFragment : Fragment() {
     private lateinit var btnLogin: Button
     private lateinit var btnFirebaseUi: Button
 
+    private val sharedViewModel: DadosViewModel by activityViewModels()
+
     private val signInLauncher = registerForActivityResult(
         FirebaseAuthUIActivityResultContract()
     ) { res ->
@@ -50,6 +53,8 @@ class LoginFragment : Fragment() {
         val fragmentBinding = inflater.inflate(R.layout.fragment_login, container, false)
 
         if (mUser != null) {
+            sharedViewModel.registraUsusario(mUser!!)
+
             findNavController().navigate(R.id.action_loginFragment_to_menu)
         }
 
@@ -68,6 +73,8 @@ class LoginFragment : Fragment() {
                     .addOnCompleteListener() {
                        if (it.isSuccessful) {
                            mUser = mAuth.currentUser
+
+                           sharedViewModel.registraUsusario(mUser!!)
 
                            findNavController().navigate(R.id.action_loginFragment_to_menu)
                         } else {
@@ -94,6 +101,8 @@ class LoginFragment : Fragment() {
                     .addOnCompleteListener() {
                         if (it.isSuccessful) {
                             mUser = mAuth.currentUser
+
+                            sharedViewModel.registraUsusario(mUser!!)
 
                             findNavController().navigate(R.id.action_loginFragment_to_menu)
                         } else {
@@ -124,6 +133,9 @@ class LoginFragment : Fragment() {
                 .build()
             signInLauncher.launch(signInIntent)
         }
+
+        sharedViewModel.registraUsusario(mUser!!)
+
         findNavController().navigate(R.id.action_loginFragment_to_menu)
         return fragmentBinding
     }
@@ -140,6 +152,7 @@ class LoginFragment : Fragment() {
             usuario.dataCriacao = mUser!!.metadata!!.creationTimestamp
             usuario.dataUltimoAcesso = mUser!!.metadata!!.lastSignInTimestamp
         }
+
         txtUsuarioLogado.setText(usuario.email)
     }
 
@@ -158,6 +171,8 @@ class LoginFragment : Fragment() {
         if (result.resultCode == AppCompatActivity.RESULT_OK) {
             mUser = FirebaseAuth.getInstance().currentUser
             if (mUser != null) {
+                sharedViewModel.registraUsusario(mUser!!)
+
                 findNavController().navigate(R.id.action_loginFragment_to_menu)
             }
         }

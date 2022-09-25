@@ -17,9 +17,7 @@ class PesquisaDAO {
             val ref: DocumentReference = db.collection(collection).document()
             pesquisa.id = ref.id
             ref.set(pesquisa).addOnSuccessListener {
-
             }.addOnFailureListener {
-
             }
         }
         return pesquisa

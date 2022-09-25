@@ -9,7 +9,7 @@ import com.google.firebase.ktx.Firebase
 import com.infnet.juarez.avaliacaolimpeza.modelo.Estabelecimento
 
 class EstabelecimentoDAO {
-    private val collection = "estabelecimentos"
+    private val collection = "estabelecimentos_collection"
     val db = Firebase.firestore
 
     fun inserir(estabelecimento: Estabelecimento): Estabelecimento {
@@ -17,30 +17,32 @@ class EstabelecimentoDAO {
             val ref: DocumentReference = db.collection(collection).document()
             estabelecimento.id = ref.id
             ref.set(estabelecimento).addOnSuccessListener {
-
-            }.addOnFailureListener {
-
-            }
+            }.addOnFailureListener { }
         }
         return estabelecimento
     }
-    fun alterar(estabelecimento: Estabelecimento): Estabelecimento{
-        val ref: DocumentReference = db.collection(collection).document()
+
+    fun alterar(estabelecimento: Estabelecimento) {
+        val ref: DocumentReference = db.collection(collection).document(estabelecimento.id.toString())
         ref.set(estabelecimento).addOnSuccessListener() {
+        }.addOnFailureListener { }
+    }
 
-        }.addOnFailureListener{
-
-        }
-        return estabelecimento
+    fun excluir(id: String): Boolean {
+        var retorno: Boolean = false
+        val ref: DocumentReference = db.collection(collection).document(id)
+        ref.delete()
+            .addOnSuccessListener { retorno = true }
+            .addOnFailureListener { retorno = false }
+        return retorno
     }
 
     fun obter(id: String): Task<DocumentSnapshot>{
         return db.collection(collection).document(id).get()
     }
 
-
     fun listar(): Task<QuerySnapshot> {
-        return  db.collection(collection).get()
+        return db.collection("estabelecimentos_collection").get()
     }
 }
 

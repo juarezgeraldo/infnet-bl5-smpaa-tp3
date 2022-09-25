@@ -6,37 +6,53 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseUser
 import com.infnet.juarez.avaliacaolimpeza.DAO.EstabelecimentoDAO
 import com.infnet.juarez.avaliacaolimpeza.DAO.PerguntaDAO
+import com.infnet.juarez.avaliacaolimpeza.DAO.PerguntaPesquisaDAO
 import com.infnet.juarez.avaliacaolimpeza.DAO.PesquisaDAO
-import com.infnet.juarez.avaliacaolimpeza.ListaPerguntasPesquisaAdapter
+import com.infnet.juarez.avaliacaolimpeza.DadosViewModel
+import com.infnet.juarez.avaliacaolimpeza.ListaPerguntasRespostasAdapter
 import com.infnet.juarez.avaliacaolimpeza.R
 import com.infnet.juarez.avaliacaolimpeza.RecyclerViewItemListner
 import com.infnet.juarez.avaliacaolimpeza.databinding.FragmentCadastraPesquisaBinding
-import com.infnet.juarez.avaliacaolimpeza.modelo.Estabelecimento
-import com.infnet.juarez.avaliacaolimpeza.modelo.Pergunta
-import com.infnet.juarez.avaliacaolimpeza.modelo.Pesquisa
+import com.infnet.juarez.avaliacaolimpeza.modelo.*
 
 class CadastraPesquisaFragment : Fragment(), RecyclerViewItemListner {
     private val pesquisaDAO = PesquisaDAO()
     private val perguntaDAO = PerguntaDAO()
+    private val perguntaPesquisaDAO = PerguntaPesquisaDAO()
     private val estabelecimentoDAO = EstabelecimentoDAO()
 
-    private lateinit var listaIdEstabelecimentos: ArrayList<String>
+    private val sharedViewModel: DadosViewModel by activityViewModels()
+    private var mUser: FirebaseUser? = null
+
+    private var perguntasRespostas: ArrayList<PerguntaResposta> = ArrayList()
+    private lateinit var listaPerguntaPesquisa: ArrayList<PerguntaPesquisa>
+    private var pesquisa: Pesquisa = Pesquisa()
+    private var listaIdEstabelecimentos: ArrayList<String> = ArrayList()
     private var _binding: FragmentCadastraPesquisaBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+//        atualizaListaPerguntas()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        mUser = sharedViewModel.recuperaUsusario()
+        atualizaListaPerguntas()
         val cadastraPesquisaViewModel =
             ViewModelProvider(this).get(CadastraPesquisaViewModel::class.java)
 
@@ -48,12 +64,12 @@ class CadastraPesquisaFragment : Fragment(), RecyclerViewItemListner {
         val spnEstabelecimento: Spinner = binding.spnEstabelecimento
         val btnSalvar: Button = binding.btnSalvar
 
-//        spnEstabelecimento.is.setOnClickListener(){
-            atualizaListaPerguntas()
-//        }
+//        txtIdUser.setText(mUser?.email!!)
+
+        atualizaListaEstabelecimentos()
 
         btnSalvar.setOnClickListener {
-            if (!spnEstabelecimento.isSelected) {
+            if (spnEstabelecimento.selectedItemPosition == 0) {
                 Toast.makeText(
                     this.requireActivity(),
                     "Informe qual estabelecimento.",
@@ -62,22 +78,34 @@ class CadastraPesquisaFragment : Fragment(), RecyclerViewItemListner {
                     .show()
             } else {
                 var estabelecimento: Estabelecimento = Estabelecimento()
-                val obj = estabelecimentoDAO.obter(listaIdEstabelecimentos[spnEstabelecimento.selectedItemPosition])
+                val obj =
+                    estabelecimentoDAO.obter(listaIdEstabelecimentos[spnEstabelecimento.selectedItemPosition])
                 obj.addOnSuccessListener {
                     estabelecimento = it.toObject(estabelecimento::class.java)!!
+                    pesquisa = Pesquisa(null, null, estabelecimento)
+                    pesquisa = pesquisaDAO.inserir(pesquisa)
+
+                    val perguntaPesquisa = PerguntaPesquisa()
+                    perguntaPesquisa.pesquisa = pesquisa
+                    perguntaPesquisa.perguntaResposta = perguntasRespostas
+
+                    perguntaPesquisaDAO.inserir(perguntaPesquisa)
+
+                    txtId.setText(null)
+                    spnEstabelecimento.setSelection(0)
+
+                    Toast.makeText(
+                        this.requireActivity(),
+                        "Pesquisa incluída com sucesso.",
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                    atualizaListaPerguntas()
+
                 }.addOnFailureListener {
                 }
-
-                val pesquisa = Pesquisa(null, null, estabelecimento, null)
-
-//                        atualizaPesquisa(pesquisa, "incluir")
-//                    txtId.setText(null)
-//                    edtTxtPesquisa.setText(null)
-//
-//                    this.atualizaListaPesquisas()
             }
         }
-        atualizaListaPerguntas()
 
         return root
     }
@@ -89,21 +117,28 @@ class CadastraPesquisaFragment : Fragment(), RecyclerViewItemListner {
 
     private fun atualizaListaPerguntas() {
         val objPerguntas = perguntaDAO.listar()
-        val perguntas: ArrayList<Pergunta> = ArrayList()
+        perguntasRespostas = ArrayList()
         objPerguntas.addOnSuccessListener {
             for (objeto in it) {
                 val pergunta = objeto.toObject(Pergunta::class.java)
-                perguntas.add(pergunta)
+                val perguntaResposta = PerguntaResposta()
+                perguntaResposta.id = pergunta.id
+                perguntaResposta.pergunta = pergunta.pergunta
+                perguntaResposta.resposta = null
+                perguntasRespostas.add(perguntaResposta)
             }
-            val lstPerguntasPesquisas = this.requireActivity().findViewById<RecyclerView>(R.id.lstPerguntasPesquisas)
-            lstPerguntasPesquisas.layoutManager = LinearLayoutManager(this.requireActivity())
-            val adapter = ListaPerguntasPesquisaAdapter(perguntas)
+            val lstPerguntasRespostas =
+                this.requireActivity().findViewById<RecyclerView>(R.id.lstPerguntasRespostas)
+            lstPerguntasRespostas.layoutManager = LinearLayoutManager(this.requireActivity())
+            val adapter = ListaPerguntasRespostasAdapter(perguntasRespostas)
             adapter.setRecyclerViewItemListner(this)
-            lstPerguntasPesquisas.adapter = adapter
+            lstPerguntasRespostas.adapter = adapter
         }.addOnFailureListener {
             val a = "erro"
         }
+    }
 
+    private fun atualizaListaEstabelecimentos() {
         val objEstabelecimento = estabelecimentoDAO.listar()
         val nomesEstabelecimento = ArrayList<String>()
         objEstabelecimento.addOnSuccessListener {
@@ -112,9 +147,14 @@ class CadastraPesquisaFragment : Fragment(), RecyclerViewItemListner {
                 nomesEstabelecimento.add(estabelecimento.nome!!)
                 listaIdEstabelecimentos.add(estabelecimento.id!!)
             }
-            val spnEstabelecimento = this.requireActivity().findViewById<Spinner>(R.id.spnEstabelecimento)
+            val spnEstabelecimento =
+                this.requireActivity().findViewById<Spinner>(R.id.spnEstabelecimento)
             val adapterEstabelecimento =
-                ArrayAdapter(this.requireActivity(), android.R.layout.simple_spinner_item, nomesEstabelecimento)
+                ArrayAdapter(
+                    this.requireActivity(),
+                    android.R.layout.simple_spinner_item,
+                    nomesEstabelecimento
+                )
             spnEstabelecimento.adapter = adapterEstabelecimento
         }.addOnFailureListener {
             val a = "erro"
@@ -128,7 +168,15 @@ class CadastraPesquisaFragment : Fragment(), RecyclerViewItemListner {
         return false
     }
 
-    override fun recyclerViewRadioButton(view: View, id: Boolean) {
-        TODO("Not yet implemented")
+    override fun recyclerViewRadioButton(
+        view: View,
+        perguntaResposta: PerguntaResposta,
+        resposta: Boolean
+    ) {
+        for (pos in perguntasRespostas.indices) {
+            if (perguntasRespostas[pos].id == perguntaResposta.id) {
+                perguntasRespostas[pos].resposta = resposta
+            }
+        }
     }
 }

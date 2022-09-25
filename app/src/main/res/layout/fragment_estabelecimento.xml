@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.cadastra_pesquisa.CadastraPesquisaFragment">
+    tools:context=".ui.estabelecimento.EstabelecimentoFragment" >
 
     <TextView
-        android:id="@+id/lblTituloPesquisa"
+        android:id="@+id/lblTituloEstabelecimento"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Cadastro de Pesquisas"
+        android:text="Cadastro de Estabelecimentos"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,14 +22,14 @@
 
     <TableLayout
         android:id="@+id/tableLayout2"
-        android:layout_width="395dp"
-        android:layout_height="wrap_content"
+        android:layout_width="389dp"
+        android:layout_height="163dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lblTituloPesquisa"
+        app:layout_constraintTop_toBottomOf="@+id/lblTituloEstabelecimento"
         tools:ignore="MissingConstraints">
 
         <TableRow
@@ -44,8 +44,8 @@
 
             <TextView
                 android:id="@+id/txtId"
-                android:layout_width="281dp"
-                android:layout_height="match_parent" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </TableRow>
 
         <TableRow
@@ -53,50 +53,85 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/lblIdUser"
+                android:id="@+id/lblEstabelecimento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Usuário:" />
+                android:text="Nome:" />
 
-            <TextView
-                android:id="@+id/txtIdUser"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/edtTxtEstabelecimento"
+                android:layout_width="336dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="start|top"
+                android:inputType="textMultiLine"
+                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/lblEmpresa"
+                android:id="@+id/lblBairro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Estabelecimento:" />
+                android:text="Bairro:" />
 
-            <Spinner
-                android:id="@+id/spnEstabelecimento"
-                android:layout_width="match_parent"
+            <EditText
+                android:id="@+id/edtTxtBairro"
+                android:layout_width="336dp"
                 android:layout_height="wrap_content"
-                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+                android:ems="10"
+                android:gravity="start|top"
+                android:inputType="textMultiLine"
+                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+        </TableRow>
 
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/lblCep"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CEP:" />
+
+            <EditText
+                android:id="@+id/edtCep"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="number"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
         </TableRow>
 
     </TableLayout>
 
+    <Button
+        android:id="@+id/btnSalvar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Salvar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout2" />
+
     <ScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="397dp"
-        android:layout_height="499dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:scrollbarStyle="insideInset"
         android:verticalScrollbarPosition="right"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableLayout2">
+        app:layout_constraintTop_toBottomOf="@+id/btnSalvar">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -104,21 +139,11 @@
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/lstPerguntasRespostas"
+                android:id="@+id/lstEstabelecimentos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp" />
         </LinearLayout>
     </ScrollView>
-
-    <Button
-        android:id="@+id/btnSalvar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Incluir"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

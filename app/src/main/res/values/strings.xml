@@ -20,7 +20,9 @@
     <string name="action_settings">Settings</string>
 
     <string name="menu_cadastro_pesquisa">Cadastro Pesquisas</string>
-    <string name="menu_gallery">Gallery</string>
+    <string name="menu_cadastro_estabelecimento">Cadastro Estabelecimentos</string>
+    <string name="menu_estatistica">Estatistica</string>
+    <string name="menu_logout">Logout</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu_cadastro_pergunta">Cadastro Perguntas</string>
     <string name="fab_content_description">Sair do app</string>

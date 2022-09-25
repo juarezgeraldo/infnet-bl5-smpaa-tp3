@@ -12,10 +12,22 @@
         tools:layout="@layout/fragment_cadastra_pesquisa" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.infnet.juarez.avaliacaolimpeza.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_cadastro_estabelecimento"
+        android:name="com.infnet.juarez.avaliacaolimpeza.ui.estabelecimento.EstabelecimentoFragment"
+        android:label="@string/menu_cadastro_estabelecimento"
+        tools:layout="@layout/fragment_estabelecimento" />
+
+    <fragment
+        android:id="@+id/nav_cadastro_pergunta"
+        android:name="com.infnet.juarez.avaliacaolimpeza.ui.pergunta.PerguntaFragment"
+        android:label="@string/menu_cadastro_pergunta"
+        tools:layout="@layout/fragment_pergunta" />
+
+    <fragment
+        android:id="@+id/nav_estatistica"
+        android:name="com.infnet.juarez.avaliacaolimpeza.ui.estatistica.EstatisticaFragment"
+        android:label="@string/menu_estatistica"
+        tools:layout="@layout/fragment_estatistica" />
 
     <fragment
         android:id="@+id/nav_slideshow"
@@ -24,8 +36,9 @@
         tools:layout="@layout/fragment_slideshow" />
 
     <fragment
-        android:id="@+id/nav_cadastro_pergunta"
-        android:name="com.infnet.juarez.avaliacaolimpeza.ui.pergunta.PerguntaFragment"
-        android:label="@string/menu_cadastro_pergunta"
-        tools:layout="@layout/fragment_pergunta" />
+        android:id="@+id/nav_logout"
+        android:name="com.infnet.juarez.avaliacaolimpeza.LoginFragment"
+        android:label="@string/menu_logout"
+        tools:layout="@layout/fragment_login" />
+
 </navigation>

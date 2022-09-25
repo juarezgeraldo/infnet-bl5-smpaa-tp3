@@ -18,6 +18,7 @@ import com.infnet.juarez.avaliacaolimpeza.R
 import com.infnet.juarez.avaliacaolimpeza.RecyclerViewItemListner
 import com.infnet.juarez.avaliacaolimpeza.databinding.FragmentPerguntaBinding
 import com.infnet.juarez.avaliacaolimpeza.modelo.Pergunta
+import com.infnet.juarez.avaliacaolimpeza.modelo.PerguntaResposta
 
 class PerguntaFragment : Fragment(), RecyclerViewItemListner {
     private val perguntaDAO = PerguntaDAO()
@@ -163,7 +164,11 @@ class PerguntaFragment : Fragment(), RecyclerViewItemListner {
         return true
     }
 
-    override fun recyclerViewRadioButton(view: View, id: Boolean) {
-
+    override fun recyclerViewRadioButton(
+        view: View,
+        perguntaResposta: PerguntaResposta,
+        resposta: Boolean
+    ) {
+        TODO("Not yet implemented")
     }
 }
