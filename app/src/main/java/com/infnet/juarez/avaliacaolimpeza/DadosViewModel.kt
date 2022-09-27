@@ -9,8 +9,8 @@ import com.infnet.juarez.avaliacaolimpeza.modelo.Usuario
 
 class DadosViewModel : ViewModel() {
 
-    private val _user = MutableLiveData<FirebaseUser>()
-    val user: LiveData<FirebaseUser> = _user
+    private val _user = MutableLiveData<FirebaseUser?>()
+    val user: MutableLiveData<FirebaseUser?> = _user
 
 
 

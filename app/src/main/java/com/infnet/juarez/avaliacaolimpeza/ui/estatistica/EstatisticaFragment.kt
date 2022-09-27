@@ -25,11 +25,11 @@ class EstatisticaFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val estatisticaViewModel =
-            ViewModelProvider(this).get(EstatisticaViewModel::class.java)
-
         _binding = FragmentEstatisticaBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        val estatisticaViewModel =
+            ViewModelProvider(this).get(EstatisticaViewModel::class.java)
 
         val lstEstatistica: ListView = binding.lstEstatistica
 
@@ -42,45 +42,42 @@ class EstatisticaFragment : Fragment() {
         _binding = null
     }
 
-    private fun atualizaRelatorioEstatistico(){
+    private fun atualizaRelatorioEstatistico() {
         val relatorio: ArrayList<String> = ArrayList()
         val obj = perguntaPesquisaDAO.listarEstatistica()
         obj.addOnSuccessListener {
             var relBairro: String = ""
-            var relPergunta: String = ""
             var mediaSim: Int = 0
             var mediaNao: Int = 0
-            var idx: Int = 0
+            var contador: Int = 0
             val linhaRel = ArrayList<String>()
 
             for (objeto in it) {
                 val perguntaPesquisa = objeto.toObject(PerguntaPesquisa::class.java)
                 if (relBairro != perguntaPesquisa.pesquisa?.estabelecimento?.bairro.toString() &&
-                        relBairro != ""){
-                    linhaRel.add("bairro: ${relBairro} - pergunta: ${relPergunta} - Sim: ${mediaSim} - Não: ${mediaNao}")
+                    relBairro != ""
+                ) {
+//                    mediaSim = mediaSim / contador
+//                    mediaNao = mediaNao / contador
+                    linhaRel.add("bairro: ${relBairro} - Sim: ${mediaSim} - Não: ${mediaNao}")
 
                     mediaSim = 0
                     mediaNao = 0
-                    idx = 0
-
-                    relBairro = perguntaPesquisa.pesquisa?.estabelecimento?.bairro.toString()
-                    relPergunta = perguntaPesquisa.perguntaResposta[idx].pergunta.toString()
-
-                }else{
-                    if (relPergunta != perguntaPesquisa.perguntaResposta[idx].pergunta.toString() &&
-                            relPergunta != ""){
-                        linhaRel.add("bairro: ${relBairro} - pergunta: ${relPergunta} - Sim: ${mediaSim} - Não: ${mediaNao}")
-
-                        mediaSim = 0
-                        mediaNao = 0
-                        idx += 1
-
-                        relBairro = perguntaPesquisa.pesquisa?.estabelecimento?.bairro.toString()
-                        relPergunta = perguntaPesquisa.perguntaResposta[0].pergunta.toString()
+                    contador = 0
+                }
+                relBairro = perguntaPesquisa.pesquisa?.estabelecimento?.bairro.toString()
+                for (perg in perguntaPesquisa.perguntaResposta) {
+                    if (perg.resposta == true) {
+                        mediaSim += 1
+                    } else {
+                        mediaNao += 1
                     }
+                    contador += 1
                 }
             }
-            linhaRel.add("bairro: ${relBairro} - pergunta: ${relPergunta} - Sim: ${mediaSim} - Não: ${mediaNao}")
+//            mediaSim = mediaSim / contador
+//            mediaNao = mediaNao / contador
+            linhaRel.add("bairro: ${relBairro} - Sim: ${mediaSim} - Não: ${mediaNao}")
 
             val lstEstatistica = this.requireActivity().findViewById<ListView>(R.id.lstEstatistica)
             val adapterEstatistica = ArrayAdapter<String>(
@@ -90,7 +87,8 @@ class EstatisticaFragment : Fragment() {
             )
             lstEstatistica.adapter = adapterEstatistica
 
-        }.addOnFailureListener {
+        }.addOnFailureListener()
+        {
             val a = "erro"
         }
     }

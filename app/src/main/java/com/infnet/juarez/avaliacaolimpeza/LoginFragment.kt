@@ -134,9 +134,7 @@ class LoginFragment : Fragment() {
             signInLauncher.launch(signInIntent)
         }
 
-        sharedViewModel.registraUsusario(mUser!!)
-
-        findNavController().navigate(R.id.action_loginFragment_to_menu)
+//        findNavController().navigate(R.id.action_loginFragment_to_menu)
         return fragmentBinding
     }
 
@@ -151,6 +149,7 @@ class LoginFragment : Fragment() {
             usuario.email = mUser!!.email
             usuario.dataCriacao = mUser!!.metadata!!.creationTimestamp
             usuario.dataUltimoAcesso = mUser!!.metadata!!.lastSignInTimestamp
+            sharedViewModel.registraUsusario(mUser!!)
         }
 
         txtUsuarioLogado.setText(usuario.email)
